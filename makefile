@@ -14,5 +14,4 @@ run:
 
 clean:
 	@echo "Cleaning up..."
-	rm bin/*.exe
-	rm bin/*.o
+	rm bin/*
