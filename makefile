@@ -7,6 +7,7 @@ driver: src/driver.cpp
 	${CC} ${CCFLAGS} src/driver.cpp bin/PGMimageProcessor.o -o bin/findComp
 
 PGMimageProcessor: src/PGMimageProcessor.cpp include/PGMimageProcessor.h
+	mkdir -p bin
 	$(CC) ${CCFLAGS} -c src/PGMimageProcessor.cpp -o bin/PGMimageProcessor.o
 
 run:
@@ -15,3 +16,4 @@ run:
 clean:
 	@echo "Cleaning up..."
 	rm bin/*
+	rmdir bin
