@@ -1,6 +1,8 @@
 #include <iostream>
 #include "../include/PGMimageProcessor.h"
 
+using namespace JNRMAT002;
+
 int setDefaultThreshold ();
 void checkThreshold (int threshold);
 
@@ -9,10 +11,10 @@ int main (int argc, char* argv[]) {
     bool thresholdFound = false; // Check value for if -t command present
     int minComponentSize = 0; // Set default to 3 in PGMimageProcessor if compSizeFound = false
     int maxComponentSize = 0; // Set default to imgWidth*imgHeight if compSizeFound = false
-    int threshold = 0; // Threshold value | default set to 128 if no threshold option set in command line. Program terminted if value outside of valid range (0..255)
+    unsigned char threshold; // Threshold value | default set to 128 if no threshold option set in command line. Program terminted if value outside of valid range (0..255)
+    int _threshold;
     bool p = false;
     bool w = false;
-
     std::string inputPGMFile;
 
     // Retreive command line input
@@ -25,8 +27,10 @@ int main (int argc, char* argv[]) {
 
         if (std::string(argv[i]) == "-t") {
             thresholdFound = true;
-            threshold = atoi(argv[i+1]);
-            checkThreshold(threshold);
+            _threshold = atoi(argv[i+1]);
+            checkThreshold(_threshold);
+            threshold = static_cast<unsigned char>(_threshold);
+            
         }
 
         if (std::string(argv[i]) == "-p") {
@@ -45,7 +49,11 @@ int main (int argc, char* argv[]) {
 
     inputPGMFile = argv[argc-1];
 
-    // std::cout << minComponentSize << " " << maxComponentSize << " " << threshold << " " << p << " " << w << " " << inputPGMFile << std::endl;
+    PGMimageProcessor PGMimageProcessor(inputPGMFile, minComponentSize, maxComponentSize, threshold, p, w);
+
+    std::cout << PGMimageProcessor.getMinComponentSize() << " " << PGMimageProcessor.getMaxComponentSize() << " "
+    << (int)PGMimageProcessor.getThreshold() << " " << PGMimageProcessor.getPrintStatus() << " "
+    << PGMimageProcessor.getWriteStatus() << " " << PGMimageProcessor.getInputFileName() << std::endl;
 
     return 0;
 }

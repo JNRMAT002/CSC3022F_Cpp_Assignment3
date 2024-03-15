@@ -1,3 +1,6 @@
+// Definition file for PGMimageProcessor (Assignment 3 for CSC3022F, 2024)
+// By Matthew January - JNRMAT002
+
 #ifndef PGMimageProcessor_H
 #define PGMimageProcessor_H
 
@@ -5,19 +8,22 @@
 
 namespace JNRMAT002 {
     class PGMimageProcessor{
+        // Naming all member variables with "m_" to distinguish from function parameters.
         private:
-            unsigned char threshold;
-            int minValidSize = 3; // Default value for component size - use this in extractComponents
-            int minComponentSize; // Set by user. Value set by constructor based on user input. Set = minValidSize if not user-specified.
-            int maxComponentSize; // Set by user. Value set by constructor. Set = imgWidth*imgHeight if not user-specified.
-            bool p;
-            bool w;
-            int imgWidth;
-            int imgHeight;
-            
+            unsigned char m_threshold;
+            int m_minValidSize = 3; // Default value for component size - use this in extractComponents.
+            int m_minComponentSize; // Set by user. Value set by constructor based on user input. Set = minValidSize if not user-specified.
+            int m_maxComponentSize; // Set by user. Value set by constructor. Set = imgWidth*imgHeight if not user-specified.
+            bool m_p;
+            bool m_w;
+            int m_imgWidth;
+            int m_imgHeight;
+            std::string m_inputPGMFile;
+
         public:
-            PGMimageProcessor(); // Constructor for when user inputs all possible options
-            ~PGMimageProcessor(); // Destructor
+            // Constructor for when user inputs all possible options.
+            PGMimageProcessor(std::string inputPGMFile, int minComponentSize, int maxComponentSize, unsigned char threshold, bool p, bool w);
+            // ~PGMimageProcessor(); // Destructor.
 
             /* process the input image to extract all the connected components,
             based on the supplied threshold (0...255) and excluding any components
@@ -45,12 +51,20 @@ namespace JNRMAT002 {
             int getLargestSize(void) const; // return number of pixels in largest component
             int getSmallestSize(void) const; // return number of pixels in smallest component
 
+            // Extra GETTERS to check variables
+            std::string getInputFileName(); // Getter method for inputFileName
+            int getMinComponentSize(); // Getter method for minComponentSize
+            int getMaxComponentSize(); // Getter method for maxComponentSize 
+            unsigned char getThreshold(); // Getter method for threshold
+            bool getPrintStatus(); // Getter method for print status
+            bool getWriteStatus(); // Getter method for write status
+
             // SETTERS
             void setMinComponentSize(); // Setter method for minComponentSize
             void setMaxComponentSize(); // Setter method for maxComponentSize 
             void setThreshold(); // Setter method for threshold
-            void setPrintStatus();
-            void setWriteStatus();
+            void setPrintStatus(); // Setter method for print status
+            void setWriteStatus(); // Setter method for write status
 
             /* print the data for a component to std::cout
             see ConnectedComponent class;
