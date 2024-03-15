@@ -5,13 +5,12 @@
 
 using namespace JNRMAT002;
 
-PGMimageProcessor::PGMimageProcessor(std::string inputPGMFile, int minComponentSize, int maxComponentSize, unsigned char threshold, bool p, bool w) {
-    m_inputPGMFile = inputPGMFile;
-    m_minComponentSize = minComponentSize;
-    m_maxComponentSize = maxComponentSize;
-    m_threshold = threshold;
-    m_p = p;
-    m_w = w;
+PGMimageProcessor::PGMimageProcessor() {
+    std::cout << "Creating PGMimageProcessor object..." << std::endl;
+}
+
+PGMimageProcessor::~PGMimageProcessor() {
+
 }
 
 // Extra GETTERS
@@ -46,27 +45,32 @@ bool PGMimageProcessor::getWriteStatus() {
 }
 
 // SETTERS
-// Setter method for threshold
-void PGMimageProcessor::setThreshold() {
+// Setter method for inputPGMFile
+void PGMimageProcessor::setInputFileName(std::string inputPGMFile) {
+    m_inputPGMFile = inputPGMFile;
+}
 
+// Setter method for threshold
+void PGMimageProcessor::setThreshold(unsigned char threshold) {
+    m_threshold = threshold;
 }
 
 // Setter method for minComponentSize
-void PGMimageProcessor::setMinComponentSize() {
-
+void PGMimageProcessor::setMinComponentSize(int minComponentSize) {
+    m_minComponentSize = minComponentSize;
 }
 
 // Setter method for maxComponentSize
-void PGMimageProcessor::setMaxComponentSize() {
-
+void PGMimageProcessor::setMaxComponentSize(int maxComponentSize) {
+    m_maxComponentSize = maxComponentSize;
 }
 
 // Setter method for print status
-void PGMimageProcessor::setPrintStatus() {
-
+void PGMimageProcessor::setPrintStatus(bool p) {
+    m_p = p;
 }
 
 // Setter method for write status
-void PGMimageProcessor::setWriteStatus() {
-
+void PGMimageProcessor::setWriteStatus(bool w) {
+    m_w = w;
 }

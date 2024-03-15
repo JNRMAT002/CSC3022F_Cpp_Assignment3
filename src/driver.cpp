@@ -3,7 +3,6 @@
 
 using namespace JNRMAT002;
 
-int setDefaultThreshold ();
 void checkThreshold (int threshold);
 
 int main (int argc, char* argv[]) {
@@ -28,7 +27,7 @@ int main (int argc, char* argv[]) {
         if (std::string(argv[i]) == "-t") {
             thresholdFound = true;
             _threshold = atoi(argv[i+1]);
-            checkThreshold(_threshold);
+            checkThreshold(_threshold); // Check validity of user input for threshold
             threshold = static_cast<unsigned char>(_threshold);
             
         }
@@ -42,25 +41,29 @@ int main (int argc, char* argv[]) {
         }
     }
 
-    if (!thresholdFound) {
-        threshold = setDefaultThreshold();
-        std::cout << "Default threshold value set to 128..." << std::endl;
-    }
-
     inputPGMFile = argv[argc-1];
 
-    PGMimageProcessor PGMimageProcessor(inputPGMFile, minComponentSize, maxComponentSize, threshold, p, w);
+    PGMimageProcessor o_PGMimageProcessor = PGMimageProcessor();
+    o_PGMimageProcessor.setInputFileName(inputPGMFile);
+    o_PGMimageProcessor.setWriteStatus(w);
+    o_PGMimageProcessor.setPrintStatus(p);
 
-    std::cout << PGMimageProcessor.getMinComponentSize() << " " << PGMimageProcessor.getMaxComponentSize() << " "
-    << (int)PGMimageProcessor.getThreshold() << " " << PGMimageProcessor.getPrintStatus() << " "
-    << PGMimageProcessor.getWriteStatus() << " " << PGMimageProcessor.getInputFileName() << std::endl;
+    if (compSizeFound) {
+        o_PGMimageProcessor.setMinComponentSize(minComponentSize);
+        o_PGMimageProcessor.setMaxComponentSize(maxComponentSize);
+    }
+
+    if (thresholdFound) {
+        o_PGMimageProcessor.setThreshold(threshold);
+    }
+
+    std::cout << std::boolalpha;
+
+    std::cout << o_PGMimageProcessor.getMinComponentSize() << " " << o_PGMimageProcessor.getMaxComponentSize() << " "
+    << (int)o_PGMimageProcessor.getThreshold() << " " << o_PGMimageProcessor.getPrintStatus() << " "
+    << o_PGMimageProcessor.getWriteStatus() << " " << o_PGMimageProcessor.getInputFileName() << std::endl;
 
     return 0;
-}
-
-// Sets default threshold value if the relevant command was not entered
-int setDefaultThreshold () {
-    return 128;
 }
 
 // Terminates the program early if the threshold value entered is not in the correct range

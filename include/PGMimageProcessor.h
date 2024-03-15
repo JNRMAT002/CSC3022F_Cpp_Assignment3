@@ -21,9 +21,11 @@ namespace JNRMAT002 {
             std::string m_inputPGMFile;
 
         public:
-            // Constructor for when user inputs all possible options.
-            PGMimageProcessor(std::string inputPGMFile, int minComponentSize, int maxComponentSize, unsigned char threshold, bool p, bool w);
-            // ~PGMimageProcessor(); // Destructor.
+            // Default constructor
+            PGMimageProcessor();
+            
+            // Destructor.
+            ~PGMimageProcessor();
 
             /* process the input image to extract all the connected components,
             based on the supplied threshold (0...255) and excluding any components
@@ -60,11 +62,12 @@ namespace JNRMAT002 {
             bool getWriteStatus(); // Getter method for write status
 
             // SETTERS
-            void setMinComponentSize(); // Setter method for minComponentSize
-            void setMaxComponentSize(); // Setter method for maxComponentSize 
-            void setThreshold(); // Setter method for threshold
-            void setPrintStatus(); // Setter method for print status
-            void setWriteStatus(); // Setter method for write status
+            void setInputFileName(std::string inputPGMFile); // Getter method for inputFileName
+            void setThreshold(unsigned char threshold); // Setter method for threshold
+            void setMinComponentSize(int minComponentSize); // Setter method for minComponentSize
+            void setMaxComponentSize(int maxComponentSize); // Setter method for maxComponentSize 
+            void setPrintStatus(bool p); // Setter method for print status
+            void setWriteStatus(bool w); // Setter method for write status
 
             /* print the data for a component to std::cout
             see ConnectedComponent class;

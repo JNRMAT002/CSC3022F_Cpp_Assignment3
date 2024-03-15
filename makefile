@@ -10,7 +10,7 @@ PGMimageProcessor: src/PGMimageProcessor.cpp include/PGMimageProcessor.h
 	$(CC) ${CCFLAGS} -c src/PGMimageProcessor.cpp -o bin/PGMimageProcessor.o
 
 run:
-	./bin/findComp -s 3 9 -t 115 -p -w mona512.pgm
+	./bin/findComp -s 3 9 -t 115 -w -p mona512.pgm
 
 clean:
 	@echo "Cleaning up..."
