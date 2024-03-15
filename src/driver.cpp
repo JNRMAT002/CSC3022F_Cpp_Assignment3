@@ -1,6 +1,8 @@
 #include <iostream>
 #include "../include/PGMimageProcessor.h"
 
+#define DEFAULT_THRESHOLD 128
+
 using namespace JNRMAT002;
 
 void checkThreshold (int threshold);
@@ -55,6 +57,9 @@ int main (int argc, char* argv[]) {
 
     if (thresholdFound) {
         o_PGMimageProcessor.setThreshold(threshold);
+    }
+    else {
+        o_PGMimageProcessor.setThreshold(DEFAULT_THRESHOLD);
     }
 
     std::cout << std::boolalpha;
