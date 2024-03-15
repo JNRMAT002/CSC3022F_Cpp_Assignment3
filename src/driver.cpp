@@ -1,4 +1,5 @@
 #include <iostream>
+#include "../include/PGMimageProcessor.h"
 
 int setDefaultThreshold ();
 void checkThreshold (int threshold);
