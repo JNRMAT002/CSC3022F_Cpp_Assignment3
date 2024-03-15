@@ -5,6 +5,7 @@
 
 using namespace JNRMAT002;
 
+// Terminates the program early if the threshold value entered is not in the correct range.
 void checkThreshold (int threshold);
 
 int main (int argc, char* argv[]) {
@@ -29,7 +30,7 @@ int main (int argc, char* argv[]) {
         if (std::string(argv[i]) == "-t") {
             thresholdFound = true;
             _threshold = atoi(argv[i+1]);
-            checkThreshold(_threshold); // Check validity of user input for threshold
+            checkThreshold(_threshold); // Check validity of user input for threshold | function in driver
             threshold = static_cast<unsigned char>(_threshold);
             
         }
@@ -45,16 +46,21 @@ int main (int argc, char* argv[]) {
 
     inputPGMFile = argv[argc-1];
 
+    // Create PGMimageProcessor object (using default constructor).
     PGMimageProcessor o_PGMimageProcessor = PGMimageProcessor();
+
+    // Set name of Input PGM File, print status, and write status.
     o_PGMimageProcessor.setInputFileName(inputPGMFile);
     o_PGMimageProcessor.setWriteStatus(w);
     o_PGMimageProcessor.setPrintStatus(p);
 
+    // Setting values of component sizes - first check whether user specified component sizes in command line.
     if (compSizeFound) {
         o_PGMimageProcessor.setMinComponentSize(minComponentSize);
         o_PGMimageProcessor.setMaxComponentSize(maxComponentSize);
     }
 
+    // Setting value of threshold - first check whether user specified threshold in command line.
     if (thresholdFound) {
         o_PGMimageProcessor.setThreshold(threshold);
     }
@@ -71,7 +77,6 @@ int main (int argc, char* argv[]) {
     return 0;
 }
 
-// Terminates the program early if the threshold value entered is not in the correct range
 void checkThreshold (int threshold) {
     if ( (threshold < 0) || (threshold > 255) ) {
         std::cout << "Please enter a valid threshold value in the 0..255 range." << std::endl;
