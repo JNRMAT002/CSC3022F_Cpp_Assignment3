@@ -2,6 +2,7 @@
 #include "../include/PGMimageProcessor.h"
 
 #define DEFAULT_THRESHOLD 128
+#define DEFAULT_MIN_SIZE 3
 
 using namespace JNRMAT002;
 
@@ -49,17 +50,6 @@ int main (int argc, char* argv[]) {
     // Create PGMimageProcessor object (using default constructor).
     PGMimageProcessor o_PGMimageProcessor = PGMimageProcessor();
 
-    // Set name of Input PGM File, print status, and write status.
-    o_PGMimageProcessor.setInputFileName(inputPGMFile);
-    o_PGMimageProcessor.setWriteStatus(w);
-    o_PGMimageProcessor.setPrintStatus(p);
-
-    // Setting values of component sizes - first check whether user specified component sizes in command line.
-    if (compSizeFound) {
-        o_PGMimageProcessor.setMinComponentSize(minComponentSize);
-        o_PGMimageProcessor.setMaxComponentSize(maxComponentSize);
-    }
-
     // Setting value of threshold - first check whether user specified threshold in command line.
     if (thresholdFound) {
         o_PGMimageProcessor.setThreshold(threshold);
@@ -67,6 +57,28 @@ int main (int argc, char* argv[]) {
     else {
         o_PGMimageProcessor.setThreshold(DEFAULT_THRESHOLD);
     }
+
+    // Set name of Input PGM File, print status, and write status.
+    o_PGMimageProcessor.setInputFileName(inputPGMFile);
+    o_PGMimageProcessor.setWriteStatus(w);
+    o_PGMimageProcessor.setPrintStatus(p);
+
+    // Extract data of inputPGMFile here
+    o_PGMimageProcessor.extractPGMData();
+    
+    // Setting values of component sizes - first check whether user specified component sizes in command line.
+    if (compSizeFound) {
+        o_PGMimageProcessor.setMinComponentSize(minComponentSize);
+        o_PGMimageProcessor.setMaxComponentSize(maxComponentSize);
+    } else {
+        o_PGMimageProcessor.setMinComponentSize(DEFAULT_MIN_SIZE);
+        o_PGMimageProcessor.setMaxComponentSize(o_PGMimageProcessor.getImgWidth() * o_PGMimageProcessor.getImgHeight());
+    }
+
+    // Extract components from pixel buffer here
+    // o_PGMimageProcessor.extractComponents(o_PGMimageProcessor.getThreshold(), o_PGMimageProcessor.getMinComponentSize());
+
+    o_PGMimageProcessor.writePGM(o_PGMimageProcessor.getImgWidth() * o_PGMimageProcessor.getImgHeight());
 
     std::cout << std::boolalpha;
 

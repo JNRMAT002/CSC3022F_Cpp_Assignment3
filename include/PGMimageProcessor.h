@@ -5,20 +5,30 @@
 #define PGMimageProcessor_H
 
 #include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <cstring>
 
 namespace JNRMAT002 {
     class PGMimageProcessor{
         // Naming all member variables with "m_" to distinguish from function parameters.
         private:
+            char * buffer; // Array to hold initial read content of inputPGMFile
+            unsigned char* pixels; // Array of unsigned char to hold the data read from inputPGMFile
             unsigned char m_threshold;
             int m_minValidSize = 3; // Default value for component size - use this in extractComponents.
             int m_minComponentSize; // Set by user. Value set by constructor based on user input. Set = minValidSize if not user-specified.
             int m_maxComponentSize; // Set by user. Value set by constructor. Set = imgWidth*imgHeight if not user-specified.
-            bool m_p;
-            bool m_w;
+            bool m_p; // Set by user
+            bool m_w; // Set by user
+            std::string m_inputPGMFile; // Set by user
             int m_imgWidth;
             int m_imgHeight;
-            std::string m_inputPGMFile;
+            std::string line; // String object used to hold getline() data from inputPGMFile
+            bool commentsProcessed = false; // Checker for whether or not all comments in header of inputPGMFile have been processed
+            int PGMcount; // Iterator to track position in header of inputPGMFile
+            std::vector<std::string> PGM_HEADER; // Vector to hold lines from header of inputPGMFile to make writing easier later
 
         public:
             // Default constructor
@@ -26,6 +36,9 @@ namespace JNRMAT002 {
             
             // Destructor.
             ~PGMimageProcessor();
+
+            // Function to extract header from inputPGMFile and to set default maxComponentSize
+            void extractPGMData();
 
             /* process the input image to extract all the connected components,
             based on the supplied threshold (0...255) and excluding any components
@@ -60,6 +73,8 @@ namespace JNRMAT002 {
             unsigned char getThreshold(); // Getter method for threshold
             bool getPrintStatus(); // Getter method for print status
             bool getWriteStatus(); // Getter method for write status
+            int getImgWidth();
+            int getImgHeight();
 
             // SETTERS
             void setInputFileName(std::string inputPGMFile); // Getter method for inputFileName
@@ -68,12 +83,17 @@ namespace JNRMAT002 {
             void setMaxComponentSize(int maxComponentSize); // Setter method for maxComponentSize 
             void setPrintStatus(bool p); // Setter method for print status
             void setWriteStatus(bool w); // Setter method for write status
+            void setImgWidth(int imgWidth);
+            void setImgHeight(int imgHeight);
 
             /* print the data for a component to std::cout
             see ConnectedComponent class;
             print out to std::cout: component ID, number of pixels
             */
             // void printComponentData(const ConnectedComponent & theComponent) const;
+
+            // Test function for writing to PGM
+            void writePGM(int bufferLength);
 
     };
 }
