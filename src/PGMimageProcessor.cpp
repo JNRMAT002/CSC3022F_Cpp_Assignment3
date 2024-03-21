@@ -62,10 +62,10 @@ void PGMimageProcessor::extractPGMData() {
             }
         }
 
-        int length = getImgWidth() * getImgHeight();
-        buffer = new char[length];
+        setBufferLength();;
+        buffer = new char[getBufferLength()];
         // read data as a block into buffer:
-        readPGM.read ((char *)buffer,length);
+        readPGM.read ((char *)buffer, getBufferLength());
 
         // ...buffer contains the entire file... rewrite to pixels
         pixels = reinterpret_cast<unsigned char*>(buffer);
@@ -80,10 +80,72 @@ void PGMimageProcessor::extractPGMData() {
 }
 
 int PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSize) {
+    
+    std::cout << "Checking output of extractComponents(): " << static_cast<unsigned>(threshold) << " " << minValidSize << " " << static_cast<unsigned>(pixels[0]) << std::endl;
+    int numComponents = 0;
+    
+
+    for (int i = 0; i < getBufferLength(); i++) {
+
+
+        if ( (pixels[i] >= threshold) ) {
+            pixels[i] = 0;
+            ConnectedComponent o_ConnectedComponent = ConnectedComponent(numComponents);
+            o_ConnectedComponent.addPixel(pixels[i], i);
+            // std::cout << "Check1" << std::endl;
+            checkAdjacentPixels(pixels[i], i, o_ConnectedComponent);
+            // std::cout << "Check2" << std::endl;
+            if (o_ConnectedComponent.getNumPixels() >= minValidSize) {
+                numComponents++;
+                Components.push_back(o_ConnectedComponent);
+                std::cout << o_ConnectedComponent.getNumPixels() << std::endl;
+            }
+            // compSizeCounter = 1;
+            // compSizeCounter = checkAdjacentPixels(pixels[i], i);
+            // std::cout << compSizeCounter << std::endl;
+        }
+    }
 
     
 
     return 1;
+}
+
+void PGMimageProcessor::checkAdjacentPixels(unsigned char pixel, int pixelIndex, ConnectedComponent& o_ConnectedComponent) {
+
+    // std::cout << "test" << std::endl;
+    int SOUTH = pixelIndex+getImgWidth();
+    int NORTH = pixelIndex-getImgWidth();
+    int EAST = pixelIndex+1;
+    int WEST = pixelIndex-1;
+
+    if ( (SOUTH < getBufferLength()) && (pixels[SOUTH] >= m_threshold) ) {
+        pixels[SOUTH] = 0;
+        o_ConnectedComponent.addPixel(pixels[SOUTH], SOUTH);
+        checkAdjacentPixels(pixels[SOUTH], SOUTH, o_ConnectedComponent);
+    }
+
+    if ( (NORTH > 61) && (pixels[NORTH] >= m_threshold) ) {
+        pixels[NORTH] = 0;
+        o_ConnectedComponent.addPixel(pixels[NORTH], NORTH);
+        checkAdjacentPixels(pixels[NORTH], NORTH, o_ConnectedComponent);
+    }
+
+    if ( (EAST < getBufferLength()) && (pixels[EAST] >= m_threshold) ) {
+        pixels[EAST] = 0;
+        o_ConnectedComponent.addPixel(pixels[EAST], EAST);
+        checkAdjacentPixels(pixels[EAST], EAST, o_ConnectedComponent);
+    }
+
+    if ( (WEST > 61) && (pixels[WEST] >= m_threshold) ) {
+        pixels[WEST] = 0;
+        o_ConnectedComponent.addPixel(pixels[WEST], WEST);
+        checkAdjacentPixels(pixels[WEST], WEST, o_ConnectedComponent);
+    }
+                // 
+
+    // return compSizeCounter++;
+    // visitedPixels.pu_back(pixelIndex-1);
 }
 
 // Extra GETTERS
@@ -123,6 +185,10 @@ int PGMimageProcessor::getImgWidth() {
 
 int PGMimageProcessor::getImgHeight() {
     return m_imgHeight;
+}
+
+int PGMimageProcessor::getBufferLength() {
+    return bufferLength;
 }
 
 // SETTERS
@@ -165,15 +231,27 @@ void PGMimageProcessor::setImgHeight(int imgHeight) {
     m_imgHeight = imgHeight;
 }
 
+void PGMimageProcessor::setBufferLength() {
+    bufferLength = m_imgWidth*m_imgHeight;
+}
+
 void PGMimageProcessor::writePGM(int bufferLength) {
     std::ofstream writePGM("data/test.pgm", std::ofstream::binary);
 
     for (int i = 0; i < PGM_HEADER.size(); i++) {
         writePGM << (PGM_HEADER[i]) << "\n";
     }
+
+    for (int i = 0; i < getBufferLength(); i++) {
+        if (pixels[i] < 255) {
+            pixels[i] = 0;
+        }
+    }
     
     writePGM.write (reinterpret_cast<char*>(pixels), bufferLength);
 
     
     writePGM.close();
+
+    std::cout << "Number of components: " << Components.size() << std::endl;
 }

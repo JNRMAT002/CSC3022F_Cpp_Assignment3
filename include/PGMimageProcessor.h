@@ -9,6 +9,8 @@
 #include <sstream>
 #include <vector>
 #include <cstring>
+#include <algorithm>
+#include "../include/ConnectedComponent.h"
 
 namespace JNRMAT002 {
     class PGMimageProcessor{
@@ -29,6 +31,9 @@ namespace JNRMAT002 {
             bool commentsProcessed = false; // Checker for whether or not all comments in header of inputPGMFile have been processed
             int PGMcount; // Iterator to track position in header of inputPGMFile
             std::vector<std::string> PGM_HEADER; // Vector to hold lines from header of inputPGMFile to make writing easier later
+            int compSizeCounter; // Counter to keep track of component size in extractComponents()
+            int bufferLength;
+            std::vector<ConnectedComponent> Components;
 
         public:
             // Default constructor
@@ -61,6 +66,8 @@ namespace JNRMAT002 {
             */
             bool writeComponents(const std::string & outFileName);
 
+            void checkAdjacentPixels(unsigned char pixel, int pixelIndex, ConnectedComponent& o_ConnectedComponent);
+
             // GETTERS
             int getComponentCount(void) const; // return number of components      
             int getLargestSize(void) const; // return number of pixels in largest component
@@ -75,6 +82,7 @@ namespace JNRMAT002 {
             bool getWriteStatus(); // Getter method for write status
             int getImgWidth();
             int getImgHeight();
+            int getBufferLength();
 
             // SETTERS
             void setInputFileName(std::string inputPGMFile); // Getter method for inputFileName
@@ -85,6 +93,7 @@ namespace JNRMAT002 {
             void setWriteStatus(bool w); // Setter method for write status
             void setImgWidth(int imgWidth);
             void setImgHeight(int imgHeight);
+            void setBufferLength();
 
             /* print the data for a component to std::cout
             see ConnectedComponent class;

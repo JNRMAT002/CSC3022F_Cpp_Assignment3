@@ -1,5 +1,6 @@
 #include <iostream>
 #include "../include/PGMimageProcessor.h"
+#include "../include/ConnectedComponent.h"
 
 #define DEFAULT_THRESHOLD 128
 #define DEFAULT_MIN_SIZE 3
@@ -76,7 +77,7 @@ int main (int argc, char* argv[]) {
     }
 
     // Extract components from pixel buffer here
-    // o_PGMimageProcessor.extractComponents(o_PGMimageProcessor.getThreshold(), o_PGMimageProcessor.getMinComponentSize());
+    o_PGMimageProcessor.extractComponents(o_PGMimageProcessor.getThreshold(), o_PGMimageProcessor.getMinComponentSize());
 
     o_PGMimageProcessor.writePGM(o_PGMimageProcessor.getImgWidth() * o_PGMimageProcessor.getImgHeight());
 

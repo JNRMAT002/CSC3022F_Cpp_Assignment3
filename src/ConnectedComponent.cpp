@@ -6,7 +6,7 @@
 using namespace JNRMAT002;
 
 ConnectedComponent::ConnectedComponent(int compID) {
-    std::cout << "Creating component number " << compID << "." << std::endl;
+    // std::cout << "Creating component number " << compID << "." << std::endl;
     m_numPixels = 0;
     setCompID(compID);
 }
@@ -35,5 +35,6 @@ void ConnectedComponent::setCompID(int compID) {
 }
 void ConnectedComponent::addPixel(unsigned char pixel, int index) {
     // Add to vector here
+    compPixels.push_back(std::make_pair(pixel, index));
     setNumPixels();
 }
