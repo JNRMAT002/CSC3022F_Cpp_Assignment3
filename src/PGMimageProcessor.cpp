@@ -81,13 +81,11 @@ void PGMimageProcessor::extractPGMData() {
 
 int PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSize) {
     
-    std::cout << "Checking output of extractComponents(): " << static_cast<unsigned>(threshold) << " " << minValidSize << " " << static_cast<unsigned>(pixels[0]) << std::endl;
+    // std::cout << "Checking output of extractComponents(): " << static_cast<unsigned>(threshold) << " " << minValidSize << " " << static_cast<unsigned>(pixels[0]) << std::endl;
     int numComponents = 0;
     
 
     for (int i = 0; i < getBufferLength(); i++) {
-
-
         if ( (pixels[i] >= threshold) ) {
             pixels[i] = 0;
             ConnectedComponent o_ConnectedComponent = ConnectedComponent(numComponents);
@@ -100,15 +98,10 @@ int PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSi
                 Components.push_back(o_ConnectedComponent);
                 std::cout << o_ConnectedComponent.getNumPixels() << std::endl;
             }
-            // compSizeCounter = 1;
-            // compSizeCounter = checkAdjacentPixels(pixels[i], i);
-            // std::cout << compSizeCounter << std::endl;
         }
     }
 
-    
-
-    return 1;
+    return numComponents;
 }
 
 void PGMimageProcessor::checkAdjacentPixels(unsigned char pixel, int pixelIndex, ConnectedComponent& o_ConnectedComponent) {
@@ -121,31 +114,42 @@ void PGMimageProcessor::checkAdjacentPixels(unsigned char pixel, int pixelIndex,
 
     if ( (SOUTH < getBufferLength()) && (pixels[SOUTH] >= m_threshold) ) {
         pixels[SOUTH] = 0;
-        o_ConnectedComponent.addPixel(pixels[SOUTH], SOUTH);
+        o_ConnectedComponent.addPixel(255, SOUTH);
         checkAdjacentPixels(pixels[SOUTH], SOUTH, o_ConnectedComponent);
     }
 
     if ( (NORTH > 61) && (pixels[NORTH] >= m_threshold) ) {
         pixels[NORTH] = 0;
-        o_ConnectedComponent.addPixel(pixels[NORTH], NORTH);
+        o_ConnectedComponent.addPixel(255, NORTH);
         checkAdjacentPixels(pixels[NORTH], NORTH, o_ConnectedComponent);
     }
 
     if ( (EAST < getBufferLength()) && (pixels[EAST] >= m_threshold) ) {
         pixels[EAST] = 0;
-        o_ConnectedComponent.addPixel(pixels[EAST], EAST);
+        o_ConnectedComponent.addPixel(255, EAST);
         checkAdjacentPixels(pixels[EAST], EAST, o_ConnectedComponent);
     }
 
     if ( (WEST > 61) && (pixels[WEST] >= m_threshold) ) {
         pixels[WEST] = 0;
-        o_ConnectedComponent.addPixel(pixels[WEST], WEST);
+        o_ConnectedComponent.addPixel(255, WEST);
         checkAdjacentPixels(pixels[WEST], WEST, o_ConnectedComponent);
     }
-                // 
 
-    // return compSizeCounter++;
-    // visitedPixels.pu_back(pixelIndex-1);
+}
+
+int PGMimageProcessor::filterComponentsBySize(int minComponentSize, int maxComponentSize) {
+    int numComponents = Components.size();
+
+    for (int i = 0; i < Components.size(); i++) {
+        if ( (Components[i].getNumPixels() <= minComponentSize) || (Components[i].getNumPixels() >= maxComponentSize) ) {
+            std::cout << Components[i].getNumPixels() << std::endl;
+            Components.erase(Components.begin() + i);
+            numComponents--;
+        }
+    }
+
+    return numComponents;
 }
 
 // Extra GETTERS
@@ -252,6 +256,4 @@ void PGMimageProcessor::writePGM(int bufferLength) {
 
     
     writePGM.close();
-
-    std::cout << "Number of components: " << Components.size() << std::endl;
 }

@@ -77,7 +77,11 @@ int main (int argc, char* argv[]) {
     }
 
     // Extract components from pixel buffer here
-    o_PGMimageProcessor.extractComponents(o_PGMimageProcessor.getThreshold(), o_PGMimageProcessor.getMinComponentSize());
+    int numComponents = o_PGMimageProcessor.extractComponents(o_PGMimageProcessor.getThreshold(), DEFAULT_MIN_SIZE);
+    std::cout << "Number of components found in initial extraction: " << numComponents << std::endl;
+
+    numComponents = o_PGMimageProcessor.filterComponentsBySize(minComponentSize, maxComponentSize);
+    std::cout << "Number of components after filtering by size criteria: " << numComponents << std::endl;
 
     o_PGMimageProcessor.writePGM(o_PGMimageProcessor.getImgWidth() * o_PGMimageProcessor.getImgHeight());
 

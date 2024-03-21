@@ -64,7 +64,7 @@ namespace JNRMAT002 {
             (255=component pixel, 0 otherwise) and write this to outFileName as a
             valid PGM. the return value indicates success of operation
             */
-            bool writeComponents(const std::string & outFileName);
+            bool writeComponents(const std::string& outFileName);
 
             void checkAdjacentPixels(unsigned char pixel, int pixelIndex, ConnectedComponent& o_ConnectedComponent);
 
