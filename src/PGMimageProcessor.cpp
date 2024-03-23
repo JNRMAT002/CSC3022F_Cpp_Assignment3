@@ -13,6 +13,23 @@ PGMimageProcessor::~PGMimageProcessor() {
     delete[] buffer;
 }
 
+// Program structured so that none of the following constructors (copy, move, copy assignment, move assignment) are used.
+PGMimageProcessor::PGMimageProcessor(const PGMimageProcessor& other) {
+
+}
+
+PGMimageProcessor::PGMimageProcessor(PGMimageProcessor&& other) {
+
+}
+
+PGMimageProcessor& PGMimageProcessor::operator =(const PGMimageProcessor& other){
+
+}
+
+PGMimageProcessor& PGMimageProcessor::operator =(PGMimageProcessor&& other) {
+
+}
+
 void PGMimageProcessor::extractPGMData() {
     std::ifstream readPGM(m_inputPGMFile, std::ifstream::binary);
     PGMcount = 0; // Initializing PGMcount to zero before PGM file is read
