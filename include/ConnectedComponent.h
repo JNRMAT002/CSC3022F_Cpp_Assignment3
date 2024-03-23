@@ -15,19 +15,21 @@ namespace JNRMAT002 {
             int m_compID; // Unique integer ID for a component
             std::vector<std::pair<unsigned char, int>> compPixels; // Storing a vector of pairs - pair is <pixel, index buffer>
         public:
+            ConnectedComponent();
+
             // Constructor
             ConnectedComponent(int compID);
 
-            // Copy Constructor
-            // ConnectedComponent(const ConnectedComponent& other);
+            // // Copy Constructor
+            ConnectedComponent(const ConnectedComponent& other);
 
-            // Move Constructor
+            // // Move Constructor
             // ConnectedComponent(ConnectedComponent&& other);
 
-            // Copy Assignment Operator
-            // ConnectedComponent& operator =(const ConnectedComponent& other);
+            // // Copy Assignment Operator
+            ConnectedComponent& operator =(const ConnectedComponent& other);
 
-            // Move Assignment Operator
+            // // Move Assignment Operator
             // ConnectedComponent& operator =(ConnectedComponent&& other);
 
             // Destructor

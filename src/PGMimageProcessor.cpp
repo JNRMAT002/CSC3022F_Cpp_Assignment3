@@ -93,13 +93,15 @@ int PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSi
     for (int i = 0; i < getBufferLength(); i++) {
         if ( (pixels[i] >= threshold) ) {
             pixels[i] = 255;
-            ConnectedComponent o_ConnectedComponent = ConnectedComponent(numComponents);
+            ConnectedComponent o_ConnectedComponent;
+            o_ConnectedComponent.setCompID(numComponents);
             o_ConnectedComponent.addPixel(pixels[i], i);
             pixels[i] = 0;
             checkAdjacentPixels(pixels[i], i, o_ConnectedComponent);
             if (o_ConnectedComponent.getNumPixels() >= minValidSize) {
                 numComponents++;
                 Components.push_back(o_ConnectedComponent);
+                // std::cout << o_ConnectedComponent.getCompID() << " " << o_ConnectedComponent.getNumPixels() << std::endl;
             }
         }
         else {
@@ -148,15 +150,20 @@ void PGMimageProcessor::checkAdjacentPixels(unsigned char pixel, int pixelIndex,
 }
 
 int PGMimageProcessor::filterComponentsBySize(int minComponentSize, int maxComponentSize) {
-    int numComponents = Components.size();
+    // int numComponents = Components.size();
 
     for (int i = 0; i < Components.size(); i++) {
         if ( (Components[i].getNumPixels() < minComponentSize) || (Components[i].getNumPixels() > maxComponentSize) ) {
+            // std::cout << Components[i].getCompID() << " " << Components[i].getNumPixels() << std::endl;
+            // int currID = Components[i].getCompID();
+            // Components[i+1].setCompID(currID);
+
+            // Components[i].setCompID(-1);
             Components.erase(Components.begin() + i);
-            numComponents--;
+            // numComponents--;
         }
     }
-
+    // std::cout << Components[1].getCompID() << std::endl;
     for (int i = 0; i < Components.size(); i++) {
         Components[i].setCompID(i);
         if (getPrintStatus()) {
@@ -164,21 +171,28 @@ int PGMimageProcessor::filterComponentsBySize(int minComponentSize, int maxCompo
         }
     }
 
-    return numComponents;
+    return Components.size();
 }
 
 bool PGMimageProcessor::writeComponents(const std::string& outFileName) {
     std::ofstream writePGM(outFileName, std::ofstream::binary);
 
     if (writePGM.is_open()) {
+
         for (int i = 0; i < PGM_HEADER.size(); i++) {
             writePGM << (PGM_HEADER[i]) << "\n";
         }
 
         for (int i = 0; i < Components.size(); i++) {
             std::vector<std::pair<unsigned char, int>> compPixels = Components[i].getCompPixels();
+            // std::cout << Components[i].getNumPixels() << std::endl;
+            // std::cout << (int)compPixels[0].first << " " << compPixels[0].second << std::endl;
+            // std::cout << compPixels.size() << std::endl;
+
             for (int j = 0; j < compPixels.size(); j++) {
+                
                 pixels[compPixels[j].second] = compPixels[j].first;
+                // std::cout << (int)pixels[Components[i].getCompPixels()[j].second] << std::endl;
             }
         }
 

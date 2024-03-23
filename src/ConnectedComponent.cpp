@@ -5,6 +5,11 @@
 
 using namespace JNRMAT002;
 
+ConnectedComponent::ConnectedComponent() {
+    m_compID = 0;
+    m_numPixels = 0;
+}
+
 ConnectedComponent::ConnectedComponent(int compID) {
     // std::cout << "Creating component number " << compID << "." << std::endl;
     m_numPixels = 0;
@@ -12,24 +17,26 @@ ConnectedComponent::ConnectedComponent(int compID) {
 }
 
 // // Program structured so that none of the following constructors (copy, move, copy assignment, move assignment) are used.
-// ConnectedComponent::ConnectedComponent(const ConnectedComponent& other) {
-//     int m_numPixels = other.m_numPixels;
-//     int m_compID = other.m_compID;
+ConnectedComponent::ConnectedComponent(const ConnectedComponent& other) {
+    m_compID = other.getCompID();
+    m_numPixels = other.getNumPixels();
 
-//     for (int i = 0; i < compPixels.size(); i++) {
-//         compPixels[i].first = other.compPixels[i].first;
-//         compPixels[i].second = other.compPixels[i].second;
-//     }
-//     // std::vector<std::pair<unsigned char, int>> compPixels;
-// }
+    compPixels = other.getCompPixels();
+}
 
 // ConnectedComponent::ConnectedComponent(ConnectedComponent&& other) {
 
 // }
 
-// ConnectedComponent& ConnectedComponent::operator =(const ConnectedComponent& other){
-//     return *this;
-// }
+ConnectedComponent& ConnectedComponent::operator =(const ConnectedComponent& other){
+    m_compID = other.getCompID();
+    m_numPixels = other.getNumPixels();
+
+    compPixels = other.getCompPixels();
+
+
+    return *this;
+}
 
 // ConnectedComponent& ConnectedComponent::operator =(ConnectedComponent&& other) {
 //     return *this;
