@@ -11,6 +11,30 @@ ConnectedComponent::ConnectedComponent(int compID) {
     setCompID(compID);
 }
 
+// // Program structured so that none of the following constructors (copy, move, copy assignment, move assignment) are used.
+// ConnectedComponent::ConnectedComponent(const ConnectedComponent& other) {
+//     int m_numPixels = other.m_numPixels;
+//     int m_compID = other.m_compID;
+
+//     for (int i = 0; i < compPixels.size(); i++) {
+//         compPixels[i].first = other.compPixels[i].first;
+//         compPixels[i].second = other.compPixels[i].second;
+//     }
+//     // std::vector<std::pair<unsigned char, int>> compPixels;
+// }
+
+// ConnectedComponent::ConnectedComponent(ConnectedComponent&& other) {
+
+// }
+
+// ConnectedComponent& ConnectedComponent::operator =(const ConnectedComponent& other){
+//     return *this;
+// }
+
+// ConnectedComponent& ConnectedComponent::operator =(ConnectedComponent&& other) {
+//     return *this;
+// }
+
 ConnectedComponent::~ConnectedComponent() {
 
 }

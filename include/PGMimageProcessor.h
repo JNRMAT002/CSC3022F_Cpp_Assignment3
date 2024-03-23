@@ -40,16 +40,16 @@ namespace JNRMAT002 {
             PGMimageProcessor();
             
             // Copy Constructor
-            PGMimageProcessor(const PGMimageProcessor& other);
+            // PGMimageProcessor(const PGMimageProcessor& other);
 
-            // Move Constructor
-            PGMimageProcessor(PGMimageProcessor&& other);
+            // // Move Constructor
+            // PGMimageProcessor(PGMimageProcessor&& other);
 
             // Copy Assignment Operator
-            PGMimageProcessor& operator =(const PGMimageProcessor& other);
+            // PGMimageProcessor& operator =(const PGMimageProcessor& other);
 
             // Move Assignment Operator
-            PGMimageProcessor& operator =(PGMimageProcessor&& other);
+            // PGMimageProcessor& operator =(PGMimageProcessor&& other);
 
             // Destructor.
             ~PGMimageProcessor();

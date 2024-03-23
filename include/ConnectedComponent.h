@@ -18,6 +18,18 @@ namespace JNRMAT002 {
             // Constructor
             ConnectedComponent(int compID);
 
+            // Copy Constructor
+            // ConnectedComponent(const ConnectedComponent& other);
+
+            // Move Constructor
+            // ConnectedComponent(ConnectedComponent&& other);
+
+            // Copy Assignment Operator
+            // ConnectedComponent& operator =(const ConnectedComponent& other);
+
+            // Move Assignment Operator
+            // ConnectedComponent& operator =(ConnectedComponent&& other);
+
             // Destructor
             ~ConnectedComponent();
 
