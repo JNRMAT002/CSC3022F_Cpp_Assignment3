@@ -22,9 +22,9 @@ namespace JNRMAT002 {
             ~ConnectedComponent();
 
             // GETTERS
-            int getNumPixels();
-            int getCompID();
-            std::vector<std::pair<unsigned char, int>> getCompPixels();
+            const int getNumPixels() const;
+            const int getCompID() const;
+            const std::vector<std::pair<unsigned char, int>> getCompPixels() const;
 
             // SETTERS
             void setNumPixels();

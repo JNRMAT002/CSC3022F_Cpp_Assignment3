@@ -80,24 +80,20 @@ int main (int argc, char* argv[]) {
     int numComponents = o_PGMimageProcessor.extractComponents(o_PGMimageProcessor.getThreshold(), DEFAULT_MIN_SIZE);
     std::cout << "Number of components found in initial extraction: " << numComponents << std::endl;
 
-    // std::cout << o_PGMimageProcessor.getMinComponentSize() << std::endl;
     numComponents = o_PGMimageProcessor.filterComponentsBySize(o_PGMimageProcessor.getMinComponentSize(), o_PGMimageProcessor.getMaxComponentSize());
     std::cout << "Number of components after filtering by size criteria: " << numComponents << std::endl;
-
-    // o_PGMimageProcessor.writePGM(o_PGMimageProcessor.getImgWidth() * o_PGMimageProcessor.getImgHeight());
 
     if (w) {
         if (o_PGMimageProcessor.writeComponents("data/test.pgm")) {
             std::cout << "Output of component data written to output file successfully." << std::endl;
         }
-        
     }
 
     std::cout << std::boolalpha;
 
-    std::cout << o_PGMimageProcessor.getMinComponentSize() << " " << o_PGMimageProcessor.getMaxComponentSize() << " "
-    << (int)o_PGMimageProcessor.getThreshold() << " " << o_PGMimageProcessor.getPrintStatus() << " "
-    << o_PGMimageProcessor.getWriteStatus() << " " << o_PGMimageProcessor.getInputFileName() << std::endl;
+    // std::cout << o_PGMimageProcessor.getMinComponentSize() << " " << o_PGMimageProcessor.getMaxComponentSize() << " "
+    // << (int)o_PGMimageProcessor.getThreshold() << " " << o_PGMimageProcessor.getPrintStatus() << " "
+    // << o_PGMimageProcessor.getWriteStatus() << " " << o_PGMimageProcessor.getInputFileName() << std::endl;
 
     return 0;
 }

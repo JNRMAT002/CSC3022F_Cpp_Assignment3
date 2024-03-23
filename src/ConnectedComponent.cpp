@@ -16,13 +16,13 @@ ConnectedComponent::~ConnectedComponent() {
 }
 
 // GETTERS
-int ConnectedComponent::getNumPixels() {
+const int ConnectedComponent::getNumPixels() const {
     return m_numPixels;
 }
-int ConnectedComponent::getCompID() {
+const int ConnectedComponent::getCompID() const {
     return m_compID;
 }
-std::vector<std::pair<unsigned char, int>> ConnectedComponent::getCompPixels() {
+const std::vector<std::pair<unsigned char, int>> ConnectedComponent::getCompPixels() const {
     return compPixels;
 }
 

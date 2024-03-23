@@ -140,6 +140,13 @@ int PGMimageProcessor::filterComponentsBySize(int minComponentSize, int maxCompo
         }
     }
 
+    for (int i = 0; i < Components.size(); i++) {
+        Components[i].setCompID(i);
+        if (getPrintStatus()) {
+            printComponentData(Components[i]);
+        }
+    }
+
     return numComponents;
 }
 
@@ -169,6 +176,13 @@ bool PGMimageProcessor::writeComponents(const std::string& outFileName) {
     }
 
     return false;    
+}
+
+void PGMimageProcessor::printComponentData(const ConnectedComponent & theComponent) const {
+
+    std::cout << "Component ID: " << theComponent.getCompID() << ". Number of pixels in Component: " << theComponent.getNumPixels() << "." << std::endl;;
+
+    
 }
 
 // Extra GETTERS

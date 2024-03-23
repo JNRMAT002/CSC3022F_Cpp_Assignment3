@@ -65,6 +65,8 @@ namespace JNRMAT002 {
             */
             int extractComponents(unsigned char threshold, int minValidSize);
 
+            void checkAdjacentPixels(unsigned char pixel, int pixelIndex, ConnectedComponent& o_ConnectedComponent);
+
             /* iterate - with an iterator - through your container of connected
             components and filter out (remove) all the components which do not
             obey the size criteria pass as arguments. The number remaining
@@ -78,7 +80,11 @@ namespace JNRMAT002 {
             */
             bool writeComponents(const std::string& outFileName);
 
-            void checkAdjacentPixels(unsigned char pixel, int pixelIndex, ConnectedComponent& o_ConnectedComponent);
+            /* print the data for a component to std::cout
+            see ConnectedComponent class;
+            print out to std::cout: component ID, number of pixels
+            */
+            void printComponentData(const ConnectedComponent & theComponent) const;
 
             // GETTERS
             int getComponentCount(void) const; // return number of components      
@@ -106,16 +112,6 @@ namespace JNRMAT002 {
             void setImgWidth(int imgWidth);
             void setImgHeight(int imgHeight);
             void setBufferLength();
-
-            /* print the data for a component to std::cout
-            see ConnectedComponent class;
-            print out to std::cout: component ID, number of pixels
-            */
-            // void printComponentData(const ConnectedComponent & theComponent) const;
-
-            // Test function for writing to PGM
-            void writePGM(int bufferLength);
-
     };
 }
 
