@@ -17,7 +17,6 @@ void PGMimageProcessor::extractPGMData() {
     std::ifstream readPGM(m_inputPGMFile, std::ifstream::binary);
     PGMcount = 0; // Initializing PGMcount to zero before PGM file is read
 
-    // std::cout << m_inputPGMFile << std::endl;
 
     // Error checking for opening of PGM file
     if (!readPGM) {
@@ -26,10 +25,6 @@ void PGMimageProcessor::extractPGMData() {
     }
 
     if (readPGM) {
-        
-        // readPGM.seekg(0, readPGM.end);
-        // int length = readPGM.tellg();
-        // readPGM.seekg(0, readPGM.beg);
 
         while (std::getline(readPGM, line)) {
             if (line[0] == '#') {
@@ -67,37 +62,31 @@ void PGMimageProcessor::extractPGMData() {
         // read data as a block into buffer:
         readPGM.read ((char *)buffer, getBufferLength());
 
-        // ...buffer contains the entire file... rewrite to pixels
+        // ...buffer contains the entire file... rewrite to pixels (which is of type unsigned char)
         pixels = reinterpret_cast<unsigned char*>(buffer);
     }
-
-    // Printing data in PGM_HEADER vector to validate retrieving of header data from inputPGMFile
-    // for (int i = 0; i < PGM_HEADER.size(); i++) {
-    //     std::cout << (PGM_HEADER[i]) << "\n";
-    // }
 
     readPGM.close();
 }
 
 int PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSize) {
-    
-    // std::cout << "Checking output of extractComponents(): " << static_cast<unsigned>(threshold) << " " << minValidSize << " " << static_cast<unsigned>(pixels[0]) << std::endl;
     int numComponents = 0;
     
 
     for (int i = 0; i < getBufferLength(); i++) {
         if ( (pixels[i] >= threshold) ) {
-            pixels[i] = 0;
+            pixels[i] = 255;
             ConnectedComponent o_ConnectedComponent = ConnectedComponent(numComponents);
             o_ConnectedComponent.addPixel(pixels[i], i);
-            // std::cout << "Check1" << std::endl;
+            pixels[i] = 0;
             checkAdjacentPixels(pixels[i], i, o_ConnectedComponent);
-            // std::cout << "Check2" << std::endl;
             if (o_ConnectedComponent.getNumPixels() >= minValidSize) {
                 numComponents++;
                 Components.push_back(o_ConnectedComponent);
-                std::cout << o_ConnectedComponent.getNumPixels() << std::endl;
             }
+        }
+        else {
+            pixels[i] = 0;
         }
     }
 
@@ -106,33 +95,36 @@ int PGMimageProcessor::extractComponents(unsigned char threshold, int minValidSi
 
 void PGMimageProcessor::checkAdjacentPixels(unsigned char pixel, int pixelIndex, ConnectedComponent& o_ConnectedComponent) {
 
-    // std::cout << "test" << std::endl;
     int SOUTH = pixelIndex+getImgWidth();
     int NORTH = pixelIndex-getImgWidth();
     int EAST = pixelIndex+1;
     int WEST = pixelIndex-1;
 
     if ( (SOUTH < getBufferLength()) && (pixels[SOUTH] >= m_threshold) ) {
+        pixels[SOUTH] = 255;
+        o_ConnectedComponent.addPixel(pixels[SOUTH], SOUTH);
         pixels[SOUTH] = 0;
-        o_ConnectedComponent.addPixel(255, SOUTH);
         checkAdjacentPixels(pixels[SOUTH], SOUTH, o_ConnectedComponent);
     }
 
-    if ( (NORTH > 61) && (pixels[NORTH] >= m_threshold) ) {
+    if ( (NORTH >= 0) && (pixels[NORTH] >= m_threshold) ) {
+        pixels[NORTH] = 255;
+        o_ConnectedComponent.addPixel(pixels[NORTH], NORTH);
         pixels[NORTH] = 0;
-        o_ConnectedComponent.addPixel(255, NORTH);
         checkAdjacentPixels(pixels[NORTH], NORTH, o_ConnectedComponent);
     }
 
     if ( (EAST < getBufferLength()) && (pixels[EAST] >= m_threshold) ) {
+        pixels[EAST] = 255;
+        o_ConnectedComponent.addPixel(pixels[EAST], EAST);
         pixels[EAST] = 0;
-        o_ConnectedComponent.addPixel(255, EAST);
         checkAdjacentPixels(pixels[EAST], EAST, o_ConnectedComponent);
     }
 
-    if ( (WEST > 61) && (pixels[WEST] >= m_threshold) ) {
+    if ( (WEST >= 0) && (pixels[WEST] >= m_threshold) ) {
+        pixels[WEST] = 255;
+        o_ConnectedComponent.addPixel(pixels[WEST], WEST);
         pixels[WEST] = 0;
-        o_ConnectedComponent.addPixel(255, WEST);
         checkAdjacentPixels(pixels[WEST], WEST, o_ConnectedComponent);
     }
 
@@ -142,14 +134,41 @@ int PGMimageProcessor::filterComponentsBySize(int minComponentSize, int maxCompo
     int numComponents = Components.size();
 
     for (int i = 0; i < Components.size(); i++) {
-        if ( (Components[i].getNumPixels() <= minComponentSize) || (Components[i].getNumPixels() >= maxComponentSize) ) {
-            std::cout << Components[i].getNumPixels() << std::endl;
+        if ( (Components[i].getNumPixels() < minComponentSize) || (Components[i].getNumPixels() > maxComponentSize) ) {
             Components.erase(Components.begin() + i);
             numComponents--;
         }
     }
 
     return numComponents;
+}
+
+bool PGMimageProcessor::writeComponents(const std::string& outFileName) {
+    std::ofstream writePGM(outFileName, std::ofstream::binary);
+
+    if (writePGM.is_open()) {
+        for (int i = 0; i < PGM_HEADER.size(); i++) {
+            writePGM << (PGM_HEADER[i]) << "\n";
+        }
+
+        for (int i = 0; i < Components.size(); i++) {
+            std::vector<std::pair<unsigned char, int>> compPixels = Components[i].getCompPixels();
+            for (int j = 0; j < compPixels.size(); j++) {
+                pixels[compPixels[j].second] = compPixels[j].first;
+            }
+        }
+
+        writePGM.write (reinterpret_cast<char*>(pixels), bufferLength);
+
+        writePGM.close();
+        return true;
+
+    }
+    else {
+        std::cerr << "Error opening " << outFileName << "." << std::endl;
+    }
+
+    return false;    
 }
 
 // Extra GETTERS
@@ -237,23 +256,4 @@ void PGMimageProcessor::setImgHeight(int imgHeight) {
 
 void PGMimageProcessor::setBufferLength() {
     bufferLength = m_imgWidth*m_imgHeight;
-}
-
-void PGMimageProcessor::writePGM(int bufferLength) {
-    std::ofstream writePGM("data/test.pgm", std::ofstream::binary);
-
-    for (int i = 0; i < PGM_HEADER.size(); i++) {
-        writePGM << (PGM_HEADER[i]) << "\n";
-    }
-
-    for (int i = 0; i < getBufferLength(); i++) {
-        if (pixels[i] < 255) {
-            pixels[i] = 0;
-        }
-    }
-    
-    writePGM.write (reinterpret_cast<char*>(pixels), bufferLength);
-
-    
-    writePGM.close();
 }
