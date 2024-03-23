@@ -39,6 +39,18 @@ namespace JNRMAT002 {
             // Default constructor
             PGMimageProcessor();
             
+            // Copy Constructor
+            PGMimageProcessor(const PGMimageProcessor& other);
+
+            // Move Constructor
+            PGMimageProcessor(PGMimageProcessor&& other);
+
+            // Copy Assignment Operator
+            PGMimageProcessor& operator =(const PGMimageProcessor& other);
+
+            // Move Assignment Operator
+            PGMimageProcessor& operator =(PGMimageProcessor&& other);
+
             // Destructor.
             ~PGMimageProcessor();
 
