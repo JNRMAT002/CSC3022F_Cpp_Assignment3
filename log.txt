@@ -1,0 +1,119 @@
+commit 3bbfaf5dcde35c9b3e5ef54324cc1f5dba44d211
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Sat Mar 23 16:03:20 2024 +0200
+
+    Adding README.md to git.
+
+commit 62acfeb50f2d62765808898d3c47c4221c077110
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Sat Mar 23 15:58:00 2024 +0200
+
+    Adding an example result image of the program to github.
+
+commit 852ccd50bf6e16662fd236de4ab65646cc123c2a
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Sat Mar 23 15:55:53 2024 +0200
+
+    Commented out big6 constructors. Will implement later.
+
+commit 713f84762f2f8a1403efca7ab39a0baf2b8c2a4a
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Sat Mar 23 15:44:30 2024 +0200
+
+    Added empty implementations/definitions for Big6 constructors.
+
+commit 3f19d3231d8bd16c4c576195103688924b88b7f7
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Sat Mar 23 15:36:25 2024 +0200
+
+    Implemented printComponentData() to print component data to std::cout.
+
+commit f41734684ba08e97fddf64403bb11a372dc68e58
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Sat Mar 23 15:05:17 2024 +0200
+
+    Wrote full corrected implementation of writePGM().
+
+commit 862c79ad1b13c9de5c9a3f1d4047e4dbac0731e3
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Sat Mar 23 11:47:30 2024 +0200
+
+    Added definitions for copy, move, copy assignment, and move assignment constructors.
+
+commit e158cae9606db8bd287dfe15b253f24f03e1fb09
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Thu Mar 21 19:13:36 2024 +0200
+
+    Implemented filterComponentsBySize() functions.
+
+commit 1faec5f7f78772fa390adcd13c3dcc4df32f73b5
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Thu Mar 21 18:32:58 2024 +0200
+
+    Implemented ConnectedComponents.cpp in extractComponents() and added a function to recursively check adjacent pixels to be used by extractComponents().
+
+commit b450bec09cb126b1f5381f3296f82f1f012038a3
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Tue Mar 19 15:50:33 2024 +0200
+
+    Created definition and skeleton implementation for ConnectedComponent.
+
+commit 1ce5f4093dac435c807e2714cb9ebbfb2b83276f
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Mon Mar 18 15:42:56 2024 +0200
+
+    Wrote additional function for retrieving all header and pixel data from an inputPGMFile. Added getter and setter functions for imgWidth, imgHeight and set default maxComponentSize based on input file data. Wrote test function to validate correctness of read and write code for the input PGM file.
+
+commit ef40b0adefc2cb8176d843a838ae7e208cf10e34
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Fri Mar 15 17:25:56 2024 +0200
+
+    Edited makefile to create bin directory if one does not exist. Added .gitignore as well.
+
+commit 2c3eacdc70d9d30bb35d5933be85c5f0e7025dda
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Fri Mar 15 17:16:36 2024 +0200
+
+    Adjusted makefiles "clean" directive.
+
+commit 4cb97ff2d0f465b020e2d53934c7edcf9083fafd
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Fri Mar 15 17:15:09 2024 +0200
+
+    Additional comments left in driver.cpp.
+
+commit 88c4da181d5f35d4c5e2f3db7dfd1d511bd2ec95
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Fri Mar 15 17:11:33 2024 +0200
+
+    Added condition to set default value of threshold when not user-specified.
+
+commit 295887cfb1bbc9a15ff86563f7a6898c5366e60e
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Fri Mar 15 17:05:59 2024 +0200
+
+    Adjusted PGMimageProcessor class to only have default constructor. Making use of setter methods to set values of PGMimageProcessor object to user input.
+
+commit b9de74e54f737249700d098ba1dbf1eff75414b9
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Fri Mar 15 16:13:59 2024 +0200
+
+    Added implementation of first constructor to PGMimageProcessor.cpp. Tested output via get methods. Edited makefile to compile all relevant files.
+
+commit 34a3aa82cd9cb6093f450eeae08aa9bf72ad81b9
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Fri Mar 15 15:13:28 2024 +0200
+
+    Wrote relatively full header file for PGMimageProcessor.h. Added include to driver.cpp.
+
+commit f69edc2fbf89d600b40b26bc1a16aeb4d767fd5b
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Thu Mar 14 13:08:58 2024 +0200
+
+    Added full command line functionality to driver.cpp. Wrote functions to check for validity of threshold value and to set its default. Added basic functionality to makefile.
+
+commit f98f1af2d4b4ff86946a18e75f8d9cb78c26226d
+Author: JNRMAT002 <matthewjanuary@gmail.com>
+Date:   Thu Mar 14 12:23:28 2024 +0200
+
+    Initialized git repo, created project directory, created named files for project source code to be written in.
