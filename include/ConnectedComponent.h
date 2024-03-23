@@ -24,13 +24,13 @@ namespace JNRMAT002 {
             ConnectedComponent(const ConnectedComponent& other);
 
             // // Move Constructor
-            // ConnectedComponent(ConnectedComponent&& other);
+            ConnectedComponent(ConnectedComponent&& other);
 
             // // Copy Assignment Operator
             ConnectedComponent& operator =(const ConnectedComponent& other);
 
             // // Move Assignment Operator
-            // ConnectedComponent& operator =(ConnectedComponent&& other);
+            ConnectedComponent& operator =(ConnectedComponent&& other);
 
             // Destructor
             ~ConnectedComponent();

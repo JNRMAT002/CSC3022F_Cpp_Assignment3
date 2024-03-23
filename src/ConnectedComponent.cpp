@@ -24,9 +24,9 @@ ConnectedComponent::ConnectedComponent(const ConnectedComponent& other) {
     compPixels = other.getCompPixels();
 }
 
-// ConnectedComponent::ConnectedComponent(ConnectedComponent&& other) {
+ConnectedComponent::ConnectedComponent(ConnectedComponent&& other) {
 
-// }
+}
 
 ConnectedComponent& ConnectedComponent::operator =(const ConnectedComponent& other){
     m_compID = other.getCompID();
@@ -38,9 +38,9 @@ ConnectedComponent& ConnectedComponent::operator =(const ConnectedComponent& oth
     return *this;
 }
 
-// ConnectedComponent& ConnectedComponent::operator =(ConnectedComponent&& other) {
-//     return *this;
-// }
+ConnectedComponent& ConnectedComponent::operator =(ConnectedComponent&& other) {
+    return *this;
+}
 
 ConnectedComponent::~ConnectedComponent() {
 
